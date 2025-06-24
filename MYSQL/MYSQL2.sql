@@ -125,7 +125,7 @@ ORDER BY city ASC ; -- Orders the city in asc order
 SELECT MAX(marks) -- Takes in the full marls row and gives the maximum marks amongst them 
 FROM Students;
 
---2--
+--2-- 
 
 SELECT MIN(marks) -- Takes in the full marks row and gives the minimum marks amongst them 
 FROM Students;
@@ -179,3 +179,12 @@ SET SQL_SAFE_UPDATES = 1 ; -- this will enable the safe mode
 
 DELETE FROM students
 WHERE city = "DELH" -- DELETES the rows where the city is delhi 
+
+--Foreign KEYS 
+
+
+-- We already know what is a foreign key . A foreign key can be understood as a key of different table which is the primary key of another table it is used to join 2 tables togther this relationship between tables can be seen using a aeer diagram 
+
+CREATE DATABASE COLLEGE; -- CREATES A DATABASE COLLEGE 
+
+ 
