@@ -186,5 +186,36 @@ WHERE city = "DELH" -- DELETES the rows where the city is delhi
 -- We already know what is a foreign key . A foreign key can be understood as a key of different table which is the primary key of another table it is used to join 2 tables togther this relationship between tables can be seen using a aeer diagram 
 
 CREATE DATABASE COLLEGE; -- CREATES A DATABASE COLLEGE 
+CREATE TABLE DEPARTMENT ( dept_id INT UNSIGNED , dept_name VARCHAR(50) , hod_name varchar(50) ,  -- generating inserting tables 
+                            no_of_teachers INT UNSIGNED , number_of_st_in_1styear INT , 
+                            number_of_st_in_2ndyear INT , number_of_st_in_3rdyear INT , 
+                            number_of_st_in_4thyear INT , primary key (dept_id) );
+ CREATE TABLE TEACHERS( teacher_id INT UNSIGNED ,
+                        name_teachers VARCHAR(50), 
+						subjects VARCHAR(50) , 
+                        depart_id INT UNSIGNED , 
+                        PRIMARY KEY(teacher_id) , 
+                        FOREIGN KEY (depart_id) REFERENCES DEPARTMENT(dept_id)) ; -- so here we can see that the table is related wioth the department table via the foreign key 
+
+-- CASCADING OF FOREIGN KEY ---
+-- there are 2 types of cascading in foreign keys they are ON UPDATE CASCADE ON DELETE CASCADE
+  
+  ON UPDATE CASCADE -- means the changes in any the child table results in the changes in the table of the parent table
+  ON DELETE CASCADE -- M=means deletion in the child key results in the deletion in the table of the parent key 
+
+  -- when we want to change the schemas of a particular table we will use the alter command 
+  -- schemas meaing design add co;=lumn delete column etc etcs
+  -- ADD COLUMN--
+
+  ALTER TABLE table_name
+  ADD COLUMN col1
+
+  -- DROP A COLUMN--
+  ALTER TABLE table_name
+  DROP COLUMN col1;
+
+  -- RENAME A TABLE 
+ALTER TABLE table_name 
+RENAME TO new table_name ;
 
  
