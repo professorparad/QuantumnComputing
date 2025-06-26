@@ -1,4 +1,4 @@
-USE COLLEGE ;
+USE COLLEGE ;students
 -- DEPARTMENTS 
 CREATE TABLE DEPARTMENT ( dept_id INT UNSIGNED , dept_name VARCHAR(50) , hod_name varchar(50) , 
                             no_of_teachers INT UNSIGNED , number_of_st_in_1styear INT , 
@@ -24,6 +24,12 @@ SELECT * FROM DEPARTMENT;
                         PRIMARY KEY(teacher_id) , 
                         FOREIGN KEY (depart_id) REFERENCES DEPARTMENT(dept_id)) ;      
 SELECT * FROM TEACHERS;
+-- VISUALIZING WHICH TEACHERS IN WHICH DEPARTMENT
+
+SELECT * 
+FROM TEACHERS 
+INNER JOIN DEPARTMENT 
+on TEACHERS.depart_id= DEPARTMENT.dept_id ;
 -- creating students table 
 CREATE TABLE STUDENTS (std_id INT UNSIGNED ,
                         std_year INT, 
@@ -32,4 +38,7 @@ CREATE TABLE STUDENTS (std_id INT UNSIGNED ,
                         PRIMARY KEY(std_id) , 
                         FOREIGN KEY (depart_id) REFERENCES DEPARTMENT(dept_id)) ; 
 SELECT * FROM STUDENTS;
+-- JOINING TABLES 
+-- INNER JOINS
+
 
