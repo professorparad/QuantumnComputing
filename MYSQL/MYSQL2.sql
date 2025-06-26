@@ -218,4 +218,284 @@ CREATE TABLE DEPARTMENT ( dept_id INT UNSIGNED , dept_name VARCHAR(50) , hod_nam
 ALTER TABLE table_name 
 RENAME TO new table_name ;
 
- 
+--  MODIFY TABLE--
+-- IT IS USED FOR MODIFYING THE DATA TYPE OF A COLUMN 
+
+ALTER TABLE students
+MODIFY COLUMN name 
+
+-- TRUNCATE-- 
+-- IF WE WANNA LIKE DELETE ALL THE DAtAS IN THE TABLE THEN WE USE THE TRUCATE COMMAND 
+
+TRUNCATE TABLE table_name ;
+
+-- DIFFERENCE BETWEEN DROPING A TABLE AND TRUNCATING A TABLE IS THAT IT DROPPING A TABLE DELETES THE ENTIRE TABLE WHILE TRUNCATING A TABLE IS DELETEING THE DATA IN THR TABLE 
+
+-- SQL JOINS --
+
+-- JOINS IN SQL IS USED TO COMBINE ROWS FROM @ DIFFERENT TABLE BASED ON COMMON COLUMNS 
+
+-- THERE ARE 4 TYPES OF JOINS IN SQL 
+
+--1. INNER JOIN 
+--2. LEFT JOIN
+--3. RIGHT JOIN 
+--4. FULL JOIN 
+
+
+--INNER JOIN 
+
+-- INTERSECTION CONCEPT IN SETS SAME SHIT 
+-- lets create this table 
+
+USE COLLEGE ;
+-- DEPARTMENTS 
+CREATE TABLE DEPARTMENT ( dept_id INT UNSIGNED , dept_name VARCHAR(50) , hod_name varchar(50) , 
+                            no_of_teachers INT UNSIGNED , number_of_st_in_1styear INT , 
+                            number_of_st_in_2ndyear INT , number_of_st_in_3rdyear INT , number_of_st_in_4thyear INT , primary key (dept_id) );
+-- INSERTING VALUES IN DEPARTMENTS 
+INSERT INTO department ( dept_id  , dept_name  , hod_name  , no_of_teachers ,  number_of_st_in_1styear , 
+                            number_of_st_in_2ndyear , number_of_st_in_3rdyear  , number_of_st_in_4thyear )
+VALUES (1 , "Electronics and Communication Engineering (ECE)" , "Dr. Neha Sharma" ,	18 ,	90 ,	85 , 	78 , 72) , 
+       (2 , "Computer Science and Engineering (CSE)" , "Dr. Rajeev Mehta", 24 ,	100	, 95 ,88 , 	83),
+       (3 , "Mechanical Engineering (ME)" , "Dr. Priya Deshpande", 20 ,	80	,75	, 70 , 68) , 
+       (4 , "Electrical Engineering (EE)" , "Dr. Anil Reddy", 16,	85,	82 ,	76 , 55) , 
+       (5, "Civil Engineering (CE))" , "Dr. Meera Iyer", 14 ,	75 ,	68 ,	62 , 62) ,
+        (6, "Information Technology (IT)" , "Dr. Sandeep Sinha", 21	,92,	86,	80 , 80) ,
+       (7, "Instrumentation and Control Engineering (ICE)" , "Dr. Kavita Joshi", 12	,60 ,	55 ,	48 , 48),
+       (8, "Chemical Engineering (ChE) " , "Dr. Rohan Bhattacharya", 17 ,	65 ,	60 ,	57 ,	52),
+        (9, "Aerospace Engineering (AE) " , "Dr. Sneha Kulkarni", 15	,50,	47,	42,	39);
+SELECT * FROM DEPARTMENT;
+-- CREATING A TEACHERS TABLE
+ CREATE TABLE TEACHERS( teacher_id INT UNSIGNED ,
+                        name_teachers VARCHAR(50), 
+						subjects VARCHAR(50) , 
+                        depart_id INT UNSIGNED , 
+                        PRIMARY KEY(teacher_id) , 
+                        FOREIGN KEY (depart_id) REFERENCES DEPARTMENT(dept_id)) ;      
+SELECT * FROM TEACHERS;
+-- creating students table 
+CREATE TABLE STUDENTS (std_id INT UNSIGNED ,
+                        std_year INT, 
+                        depart_id INT UNSIGNED , 
+						std_fees DECIMAL(7 , 4) ,
+                        PRIMARY KEY(std_id) , 
+                        FOREIGN KEY (depart_id) REFERENCES DEPARTMENT(dept_id)) ; 
+SELECT * FROM STUDENTS;
+
+
+--AS there are dept id s in both teachers and departments what we will do we will use the concept of inner join here 
+
+SELECT *
+FROM TEACHERS
+INNER JOIN DEPARTMENT 
+on TEACHERS.depart_id = DEPARTMENT.dept_id;
+
+--we cam use aliases also when there are a large number of tables like 
+
+SELECT *
+FROM TEACHERS as S -- this is an alias 
+INNER JOIN DEPARTMENT 
+on TEACHERS.depart_id = DEPARTMENT.dept_id;
+
+
+---- LEFT JOIN 
+
+-- WE WILL BE USING THE SAME TABLE IN ABOVE 
+-- IT RETURNS ALL THE DATA IN THE LEFT TABLE ALONG WITH DATAS THAT IS INTERSECTION WITH THE RIGHT TABLE
+
+-- KINDA LIKE SAME SYNTAX
+
+SELECT * 
+FROM TEACHERS as t
+LEFT JOIN DEPARTMENT as d
+ON t.depart_id = d.dept_id 
+
+-- SO THIS DOES THE LEFT JOIN OF THE TABLE WHERE WE WANT TO VIEW THE TABLE 
+-- IT WILL GIVE THE NAMES\ DATAS OF THE LEFT table as well as those datas that are in conjunction with the right table
+
+---- RIGHT JOIN 
+
+-- WE WILL BE USING THE SAME TABLE IN ABOVE 
+-- IT RETURNS ALL THE DATA IN THE RIGHT TABLE ALONG WITH DATAS THAT IS INTERSECTION WITH THE LEFT TABLE
+
+-- KINDA LIKE SAME SYNTAX
+
+SELECT * 
+FROM TEACHERS as t
+RIGHT JOIN DEPARTMENT as d
+ON t.depart_id = d.dept_id 
+
+-- SO THIS DOES THE RIGHT JOIN OF THE TABLE WHERE WE WANT TO VIEW THE TABLE 
+-- IT WILL GIVE THE NAMES\ DATAS OF THE RIGHT table as well as those datas that are in conjunction with the left  table
+
+-- SELF JOIN--
+
+--- MY SQL THERE IS NO SUCH COMMAND FOR SELF JOIN WHICH IS THE UNION OF SETS SO WE WILL BYPASS IT BY USING THIS SYNTAX
+-- IN ORDER TO THIS FULL JOIN SHIT WE USE FIRST DO THE LEFT JOIN THEN DO THE ROGHT JOIN THE DO AN UNION TO GET THE FULL JOIN
+
+SELECT *
+FROM TEACHERS AS t
+LEFT JOIN DEPARTMENT AS d
+ON t.depart_id = d.dept.id
+UNION 
+SELECT *
+FROM TEACHERS AS t
+RIGHT JOIN DEPARTMENT AS d
+ON t.depart_id = d.dept.id
+
+-- SPECIAL JOINS
+
+-- REMEMBER SET THEORIES A-B VALUES OF A NOT IN BE FORMULA IS n(A-B) = n(A) - n(A INTERSECTION B) SO SAME CONCEPT HERE WE WILL DO THAT IS 
+-- THE LEFT EXCLUSIVE JOIN
+
+SELECT *
+FROM TEACHERS AS t
+LEFT JOIN DEPARTMENT AS d  -- THIS ENTIRE SHIT GIVES THE LEFT SET OR A BOW FOR THE A-B PSRT 
+ON t.depart_id = d.dept.id
+WHERE d.id IS NULL ;
+
+-- RIGHT EXCLUSIVE JOIN 
+
+-- SAME BUT n(B-A)
+
+SELECT *
+FROM TEACHERS AS t
+RIGHT JOIN DEPARTMENT AS d  -- THIS ENTIRE SHIT GIVES THE LEFT SET OR A BOW FOR THE A-B PSRT 
+ON t.depart_id = d.dept.id
+WHERE t.id IS NULL ;
+
+-- FULL EXCLUSIVE JOIN 
+
+-- THIS SHIT IS THE n(A-B) U n(B-A) 
+
+SELECT *
+FROM TEACHERS AS t
+LEFT JOIN DEPARTMENT AS d  -- THIS ENTIRE SHIT GIVES THE LEFT SET OR A BOW FOR THE A-B PSRT 
+ON t.depart_id = d.dept.id
+WHERE d.id IS NULL ;
+UNION 
+SELECT *
+FROM TEACHERS AS t
+RIGHT JOIN DEPARTMENT AS d  -- THIS ENTIRE SHIT GIVES THE LEFT SET OR A BOW FOR THE A-B PSRT 
+ON t.depart_id = d.dept.id
+WHERE t.id IS NULL ;
+
+
+--SELF JOIN 
+
+-- WHEN WE WANT TO JOIN 2 TABLES WE WILL USE THIS SHIT 
+
+SELECT *
+FROM TEACHERS as t
+JOIN DEPARTMENTS as d
+ON t.depart_id = d.dept_id
+
+
+-- CREATING AN HIERARCHICAL TABLE USING SELF JOIN 
+
+CREATE TABLE employees (id INT , NAME VARCHAR(20), MANAGER_ID INT) ; 
+-- INSERTING VALUES IN THE TABLE 
+INSERT INTO employees
+values (101 , "ADAM" , 103),
+        (102 , "BOB" , 104) , 
+        (103 , "CASEY" , NULL) ,
+        (104 , "DONALD" , 103) ;
+
+SELECT a.name as MANAGER_name , b.name 
+FROM employees as A
+JOIN employees as B
+ON A.id = B.MANAGER_ID
+
+-- UNION 
+
+-- UNITES 2 TABLES REJECTING REPEATATION AS SAME AS CONCEPT IN SETS 
+
+SELECT columns_no FROM table_a
+UNION 
+SELECT columns_no FROM table_b
+
+-- UNION ALL
+
+-- UNITES 2 TABLES ALLOWING REPEATATION 
+
+SELECT columns_no FROM table_a
+UNION ALL
+SELECT columns_no FROM table_b
+
+--====================================== SQL SUB QUERIES ==================================================
+
+
+
+
+
+-- So whem we are like inserting a query under a query this system is know as sub query in sql 
+--it helps to make the system a lot more dynamic 
+
+----PROBLEM STATEMENT 1
+-- FIND THE AVERGAE MARKS OF THE STUDENT AND ALSO FIND THE NAMES OF THE STUDENTS THTA HAVE MARKS GRETATER THAN THE AVERAGE 
+-- LET US ASSUME THAT WE HAVE A TABLE OF STUDENTS 
+
+-- AVERAGE MARKS
+
+SELECT AVG(MARKS)
+FROM STUDENTS ;
+-- MPW FINDOMG THE NAMES OF STUDENTS HAVING GREATER THAN THE AVERAGE MARKS
+
+SELECT NAME 
+FROM STUDENTS 
+WHERE MARKS >(SELECT AVG(MARKS)
+FROM STUDENTS ;)
+
+
+---PROBLEM STATEMENT 2
+
+-- FIND THE EVEN ROLL NUMBERS 
+-- FIND THE NAME OF THE STUDENTS WITH EVEN ROLL NUMBERS 
+
+-- GIVES ALL THE EVEN ROLL NUMBERS
+SELECT roll_no 
+FROM STUDENTS 
+WHERE roll_no % 2 = 0
+
+-- GIVES ALL THE NAMES OF STUDENTS HAVING EVEN ROLL NUMBER 
+
+SELECT name 
+FROM STUDENTS 
+WHERE roll_no IN (SELECT roll_no 
+                FROM STUDENTS 
+                WHERE roll_no % 2 = 0)
+
+-- PROBLEM STATEMENT 3
+-- FIND THE MAXIMUM MARKS FROM STUDNTS OF DELHI 
+
+SELECT MAX(marks)
+FROM
+ (SELECT * FROM
+STUDENTS 
+WHERE CITY = "DELHI") AS TEMP ;
+
+
+
+
+-- ========================== MY SQL VIEWS ============================================
+
+
+
+--  VIEWS IN MYSQL ARE VIRTUAL TABLES BASED ON THE SET OF COMMANDS GIVEN 
+
+
+-- when we want to like create a sub table from a real table in a databse to perform operations in the that virtual table such that there is no permanent chanegs in the real table is called views
+
+CREATE VIEW view1 as 
+SELECT dept_id , teacher_name from TEACHERS ; 
+
+-- THIS CREATED A SMALL TABLE CONTAINING ONLY DEPT ID AND TEACHER NAME KNOWN AS VIEW1
+-- AFTER THIS WE CAN LIKE EASILY DO THE SAME FUNCTIONS THAT WE DO IN THE TABLE WE CAN DO WIT THE VIEWS 
+
+SELECT * FROM view1;
+
+-- ETC ETC ETC -- 
+
+--- FINISHED SQL 
+-- completed the DDL , DML , DQL  in mysql 
