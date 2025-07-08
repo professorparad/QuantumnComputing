@@ -31,4 +31,8 @@ while a :
         print("-------------------------------------------------")
         print(f"please Enter a number between {lower} & {higher}")
         print("-------------------------------------------------")
-print (guess)
+print (f"You took {guess} guesses to get to the correct answer")
+if guess <3 :
+    print("You are a pro man Keep it up ")
+else :
+    print("NOOB!! Skill ISSUE!!")
