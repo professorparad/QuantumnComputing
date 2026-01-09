@@ -1,0 +1,11 @@
+## THIS is the code for all the things that you need to ssmf packeges thsat you need to  run for all the different projects ]
+pandas
+numpy
+streamlit
+mathplotlib.pyplot
+seaborn
+flask
+faker
+nltk 
+scklearn
+Tensorflow
