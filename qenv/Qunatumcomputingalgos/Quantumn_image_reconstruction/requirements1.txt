@@ -1,0 +1,8 @@
+tensorflow
+pennylane 
+qiskit 
+#qiskit qiskit-aer ### if pip isntall doesnot work with is please use !pip install qiskit qiskit-aer directly on the terminal 
+matplotlib
+numpy
+opencv-python 
+quimb 
